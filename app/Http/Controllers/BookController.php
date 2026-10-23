@@ -7,10 +7,15 @@ use Illuminate\Http\Request;
 
 class BookController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $books = Book::with(['author', 'category'])->get();
-        return response()->json($books);
+
+        if ($request->wantsJson()) {
+            return response()->json($books);
+        }
+
+        return view('books.index', compact('books'));
     }
 
     public function store(Request $request)

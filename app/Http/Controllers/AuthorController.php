@@ -7,10 +7,15 @@ use Illuminate\Http\Request;
 
 class AuthorController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $authors = Author::all();
-        return response()->json($authors);
+
+        if ($request->wantsJson()) {
+            return response()->json($authors);
+        }
+
+        return view('authors.index', compact('authors'));
     }
 
     public function store(Request $request)

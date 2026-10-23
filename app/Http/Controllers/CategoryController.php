@@ -7,10 +7,15 @@ use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $categories = Category::all();
-        return response()->json($categories);
+
+        if ($request->wantsJson()) {
+            return response()->json($categories);
+        }
+
+        return view('categories.index', compact('categories'));
     }
 
     public function store(Request $request)
